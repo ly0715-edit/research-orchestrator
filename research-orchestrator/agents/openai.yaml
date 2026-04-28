@@ -1,0 +1,8 @@
+interface:
+  display_name: "Research Orchestrator"
+  short_description: "科研项目调度、审核与交接工作流"
+  brand_color: "#2563EB"
+  default_prompt: "Use $research-orchestrator to coordinate this research task with level selection, sub-agent dispatch, review, and handoff records."
+
+policy:
+  allow_implicit_invocation: true
