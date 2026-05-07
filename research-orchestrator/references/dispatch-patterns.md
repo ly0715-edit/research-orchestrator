@@ -1,78 +1,103 @@
 # Dispatch Patterns
 
+The main thread chooses the lightest workflow that protects the research objective. Escalate when evidence, physics, or reproducibility risk increases.
+
 ## Level: quick
 
-Use for local, low-risk tasks.
+Use for local, low-risk tasks with no durable scientific consequence.
 
-Main thread pattern:
+Main thread flow:
 
-1. Restate the immediate goal.
-2. Read or inspect the minimum necessary files/output.
-3. Execute directly without sub-agent unless parallel search is useful.
-4. Report result, risk, and any optional follow-up.
+1. State the immediate goal.
+2. Inspect the minimum necessary files, command output, or context.
+3. Execute directly unless parallel inspection is clearly useful.
+4. Report result, uncertainty, and optional follow-up.
 
-Required records: none, unless the result changes project memory.
+Records: none unless the result changes project memory.
+
+Stop or upgrade when:
+
+- The task reveals a physical assumption, experiment design issue, or result interpretation problem.
+- The user asks for continuity, strict review, or project handoff.
 
 ## Level: standard
 
-Use for ordinary implementation, analysis, experiment scripts, data processing, or module-level work.
+Use for ordinary research implementation, data processing, experiment scripts, module edits, stage summaries, or non-final analysis.
 
-Main thread pattern:
+Main thread flow:
 
-1. Define goal, scope, success criteria.
-2. Optionally dispatch `Execution Planner` if the work spans multiple files or experiments.
-3. Dispatch or perform implementation.
-4. Run verification where feasible.
-5. Do a basic review against the stated objective.
-6. Update `worklog.md` and `handoff.md` when a project record directory exists.
+1. Define objective, scope, success criteria, and out-of-scope boundaries.
+2. Build a compact scientific framing.
+3. Use `Execution Planner` when work spans multiple files, scripts, data products, or verification stages.
+4. Execute locally or dispatch bounded `Implementation Agent` tasks.
+5. Run feasible verification and inspect outputs.
+6. Perform a basic review against the objective and scientific framing.
+7. Update `worklog.md` and `handoff.md` when a project record directory exists.
+8. Final response includes conclusion, completed work, verification, risks, and next actions.
 
-Recommended context packet:
+Standard context packet:
 
 ```text
 Task level: standard
 Objective:
+Scientific framing:
 Known constraints:
-Relevant files:
+Relevant files/data:
 Allowed write scope:
+Forbidden changes:
 Expected output:
 Verification required:
-Relevant skills to use:
+Record directory, if any:
+Relevant companion tools/skills:
 ```
+
+Upgrade to critical when:
+
+- A physical definition, threshold, label, metric, or assumption changes.
+- Verification results affect a thesis/paper/report conclusion.
+- The work determines whether an experiment is scientifically valid.
+- The user asks for independent review.
 
 ## Level: critical
 
-Use for physics assumptions, core algorithms, thesis direction, paper conclusions, important experiments, or work where drifting from the physical meaning would be costly.
+Use for physics assumptions, core algorithms, final or near-final conclusions, direction changes, high-impact experiments, reproducibility-critical workflows, or domain logic where mistakes are scientifically costly.
 
-Main thread pattern:
+Main thread flow:
 
-1. Define research objective and success criteria.
-2. Read `handoff.md`, `physics-core.md`, and relevant recent records if available.
-3. Dispatch `Physics Translator` with minimal source material.
-4. Convert translation into an implementation plan via `Execution Planner`.
-5. Execute via one or more bounded `Implementation Agent` tasks, or locally when delegation is not useful.
-6. Dispatch `Physics Reviewer` independently with the objective, physics core, plan/result, and evidence.
-7. Resolve conflicts and decide corrections.
-8. Use `Research Scribe` or update records directly.
-9. Report conclusion, risks, corrections, and next actions.
+1. Define research objective, scientific claim at risk, success criteria, and stop conditions.
+2. Read current `handoff.md`, `physics-core.md`, `decisions.md`, and recent `reviews.md` if they exist.
+3. Dispatch `Physics Translator` unless the required framing is already current and explicit.
+4. Convert approved framing into a plan via `Execution Planner` or main-thread planning.
+5. Execute through bounded tasks; keep write scopes disjoint when using multiple agents.
+6. Verify outputs with commands, data checks, figures, metrics, or artifact inspection as appropriate.
+7. Dispatch `Physics Reviewer` independently with objective, physics core, plan/result, and evidence.
+8. Use `Evidence Auditor` when claims depend on metrics, plots, logs, datasets, citations, or reproducibility details.
+9. Resolve conflicts explicitly; decide corrections in the main thread.
+10. Update records: `worklog.md`, `reviews.md`, `decisions.md` when applicable, and `handoff.md`.
+11. Final response states conclusion, gate status, evidence, risks, decisions, and next actions.
 
-Recommended context packet:
+Critical context packet:
 
 ```text
 Task level: critical
 Research objective:
+Scientific claim at risk:
 Physics core:
 Current hypothesis:
 Relevant evidence/files:
-Out of scope:
-Required output schema:
-Relevant skills to use:
+Allowed scope:
+Forbidden changes:
+Required review gates:
+Expected output schema:
 Decision owner: main thread
 ```
 
 ## Dispatch Hygiene
 
-- 子 Agent 输入越短越好，但必须包含目标、边界、证据、输出格式，以及必要时应使用的相关 Skill。
-- 不把完整历史倾倒给子 Agent；用 `handoff.md` 和必要文件代替。
-- 执行 Agent 不负责物理最终判断；审核 Agent 不负责实现。
-- 当 Agent 输出冲突时，主线程必须显式列出冲突点和采用理由。
-- 重要任务结束前必须有可交接的下一步动作。
+- Do not dump full history into a sub-agent. Send objective, boundary, evidence, and schema.
+- Prefer records and must-read files over long chat summaries.
+- Implementation agents do not make physical validity decisions.
+- Review agents do not implement fixes unless separately assigned.
+- If sub-agent outputs conflict, list the conflict, evidence on each side, and main-thread decision.
+- If evidence is insufficient, stop at a provisional conclusion and record what is missing.
+- Important tasks end with next actions that a future thread can execute.

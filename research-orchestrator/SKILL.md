@@ -1,105 +1,135 @@
 ---
 name: research-orchestrator
-description: Use when coordinating long-running research projects, physics-to-algorithm work, radar meteorology tasks, multi-agent research execution, context handoff, project memory, or rigorous review of scientific implementation.
+description: Use when a research task is long-running, physics-sensitive, evidence-heavy, multi-agent, or requires project memory, scientific handoff, radar meteorology expertise, experiment governance, or independent review before conclusions change.
 ---
 
 # Research Orchestrator
 
-## Overview
+## Purpose
 
-`research-orchestrator` 是面向长期科研项目的主线程调度 Skill。主线程负责目标、分级、派发、整合和记录；子 Agent 只处理明确边界内的专长任务。
+`research-orchestrator` is a governance skill for scientific work where the cost of losing physical meaning, project continuity, or evidence discipline is high.
 
-核心原则：节约上下文、保护物理主旨、执行与审核分离、长期记录可交接。
+It does not replace domain, coding, document, or GitHub skills. It decides how to frame the research objective, when to delegate, what evidence is required, how results are reviewed, and what must be recorded for future threads.
 
-## When to Use
+## Operating Principles
 
-在这些场景使用：
+- Physics before implementation: define the physical question before changing code, experiments, or conclusions.
+- Evidence before claims: separate observations, assumptions, inferences, and decisions.
+- Main thread owns judgment: sub-agents provide bounded analysis, implementation, and review; they do not make final project decisions.
+- Execution and review are separate whenever conclusions, core algorithms, or physical assumptions may change.
+- Records are part of the work, not afterthoughts, for standard and critical tasks.
 
-- 长期科研项目、博士课题、横向项目、多轮实验或多线程协作。
-- 雷达气象学、物理主导、算法实现、实验验证、论文结论相关任务。
-- 需要把物理目标转译为算法、代码、实验、文档执行计划。
-- 用户要求“不要跑偏”“严格审核”“长期记录”“交接”“按科研工作流推进”。
-- 当前会话上下文较长，需要压缩任务输入并让子 Agent 接收最小必要材料。
+## Trigger Logic
 
-不用于普通闲聊、一次性简短问答、无需项目记忆的小问题。
+Use this skill when any of these are true:
+
+- The task affects a research project that spans multiple sessions, experiments, papers, reports, or code modules.
+- The task depends on physical interpretation: radar reflectivity, ZDR, rhoHV, KDP, melting layer, QPE, nowcasting, FY-4A, ERA5, PCT circulation typing, or similar domain logic.
+- The user asks for project continuity, handoff, record keeping, strict review, sub-agent coordination, or not losing the scientific thread.
+- The work may alter a hypothesis, physical assumption, algorithmic definition, experiment design, result interpretation, or thesis/paper conclusion.
+- The task needs multiple independent viewpoints: translation, planning, implementation, scientific review, or record synthesis.
+
+Do not use this skill for isolated factual questions, one-command checks, ordinary local edits with no scientific consequence, or short conversation that does not require memory or review.
 
 ## Level Selection
 
-主线程先判断任务等级；用户显式指定时，以用户指定为准。
+Select the smallest level that protects scientific quality. Upgrade immediately if later evidence shows higher risk.
 
-| Level | Default Trigger | Required Flow |
+| Level | Use When | Required Governance |
 |---|---|---|
-| `quick` | 文件查找、局部解释、小修、单条命令、非关键问题 | Understand -> Execute -> Brief Report |
-| `standard` | 普通算法实现、实验脚本、数据处理、模块修改、阶段分析 | Understand -> Plan -> Execute -> Basic Review -> Update Records |
-| `critical` | 物理假设、核心算法、论文结论、博士主线、重要实验、方向调整 | Understand -> Physics Translation -> Execution Planning -> Execute -> Independent Review -> Record -> Synthesis |
+| `quick` | Local inspection, simple explanation, small non-scientific edit, low-risk command | Direct work, concise result, risk note |
+| `standard` | Ordinary experiment scripts, data processing, module edits, stage summaries, non-final analysis | Scope, plan, execute, verify, basic review, record update when records exist |
+| `critical` | Physical assumptions, core algorithms, QPE/nowcasting validity, melting-layer logic, thesis/paper conclusions, direction changes, reproducibility-critical experiments | Physics translation, execution plan, bounded execution, independent scientific review, decision record, handoff |
 
-升级规则：涉及物理主旨、关键假设、核心算法、论文/项目结论、长期记录或跨线程交接时，默认升级到 `critical`。
+Automatic upgrade to `critical` when the task changes any of these:
 
-## Main Thread Duties
+- Definition of a physical variable, threshold, diagnostic, or quality-control criterion.
+- Mapping from physical concept to algorithm, model input, label, loss, metric, or validation design.
+- Interpretation of figures, experiments, case studies, ablations, or paper/report conclusions.
+- Long-term project state, record structure, or handoff that future work will rely on.
 
-| Duty | Requirement |
+## Main Thread Responsibilities
+
+The main thread must explicitly own these decisions:
+
+- Research objective, scope, success criteria, and out-of-scope boundaries.
+- Task level and any escalation or de-escalation rationale.
+- Context packet given to each sub-agent.
+- Acceptance or rejection of sub-agent outputs.
+- Final scientific interpretation and next action.
+- Record updates for `standard` and `critical` work.
+
+## Scientific Framing Checklist
+
+Before planning a `standard` or `critical` task, write or infer a compact framing:
+
+- physical_objective: what physical process, phenomenon, or forecast behavior is being protected or tested?
+- scientific_claim_at_risk: what claim could become wrong if the work drifts?
+- observables: radar/satellite/model/data quantities involved, with units or definitions when known.
+- assumptions: explicit assumptions and unknowns.
+- evidence_available: files, figures, logs, datasets, prior records, or papers already available.
+- success_criteria: reproducible condition for accepting the work.
+
+If this framing cannot be completed for a critical task, pause execution and ask for the missing scientific definition unless it can be discovered from project records.
+
+## Sub-Agent Policy
+
+Read `references/agent-cards.md` only when delegation is useful. Do not expand all role cards by default.
+
+| Role | Use |
 |---|---|
-| `Scope Control` | 明确目标、任务等级、成功标准和边界。 |
-| `Context Packing` | 只向子 Agent 提供必要目标、文件、约束和输出格式。 |
-| `Task Dispatch` | 明确每个子 Agent 的角色、输入、禁止事项和产物。 |
-| `Synthesis` | 整合子 Agent 输出，解决冲突，决定下一步。 |
-| `Memory Update` | 对 `standard` 和 `critical` 任务维护长期日志与交接包。 |
+| `Physics Translator` | Required for critical tasks before implementation unless an equivalent physics-core record already exists and is current. |
+| `Execution Planner` | Use when work spans multiple files, experiments, data products, or verification steps. |
+| `Implementation Agent` | Use for bounded code, data, experiment, or document execution with clear write scope. |
+| `Physics Reviewer` | Required for critical tasks after plan or implementation; must be independent from executor. |
+| `Evidence Auditor` | Use when claims depend on logs, figures, metrics, datasets, citations, or reproducibility evidence. |
+| `Research Scribe` | Use or perform directly for standard and critical record updates. |
 
-主线程不得把最终项目决策交给子 Agent。子 Agent 提供证据、风险和建议，主线程负责判断。
+Sub-agents receive minimal context: objective, level, physics core, evidence, allowed scope, forbidden changes, expected output schema, and verification requirements.
 
-## Skill Coordination
+## Dispatch And Review References
 
-`research-orchestrator` 是调度层，不替代专门 Skill。主线程和子 Agent 在坚持本 Skill 的等级、记录和物理审核原则下，应按任务需要调用更合适的 Skill。
+- For role cards and output schemas, read `references/agent-cards.md`.
+- For level-specific workflows and context packets, read `references/dispatch-patterns.md`.
+- For scientific acceptance gates, read `references/review-gates.md`.
+- For record files and templates, read `references/record-templates.md`.
 
-| Situation | Preferred Skill Type |
-|---|---|
-| 实现功能、修复 bug、重构 | TDD、debugging、code review、implementation planning |
-| 代码审查、发布前检查 | requesting-code-review、pre-publish-review、review workflow |
-| 文档、表格、演示文稿 | documents、spreadsheets、presentations |
-| GitHub issue/PR 分析 | github triage 或 PR workflow |
-| 新 Skill 创建或修改 | skill-creator、writing-skills |
+## Records And Handoff
 
-规则：先满足用户显式指令和当前 Skill 的科研调度原则；再调用任务专用 Skill。若两者冲突，主线程必须说明冲突并选择更符合用户目标的路径。
-
-## Sub-Agent Use
-
-完整角色卡见 `references/agent-cards.md`。按需读取，不要在每次任务中全部展开。
-
-| Agent | Use When |
-|---|---|
-| `Physics Translator` | `critical` 必用；把物理目的转成算法、变量、约束和风险。 |
-| `Execution Planner` | `standard`/`critical` 常用；把目标拆成文件级、实验级、验证级任务。 |
-| `Implementation Agent` | 有明确执行范围时；负责代码、实验、文档或数据处理。 |
-| `Physics Reviewer` | `critical` 必用；独立审查物理一致性和假设漂移。 |
-| `Research Scribe` | `standard`/`critical` 必用；维护长期记录与交接摘要。 |
-
-## Records
-
-长期项目建议使用：
+For a recognized project, prefer a record directory such as:
 
 ```text
-research/
-  <project-name>/
-    project-brief.md
-    physics-core.md
-    decisions.md
-    worklog.md
-    reviews.md
-    handoff.md
+research/<project-name>/
+  project-brief.md
+  physics-core.md
+  decisions.md
+  worklog.md
+  reviews.md
+  handoff.md
 ```
 
-模板见 `references/record-templates.md`。
+If no record directory exists, do not invent project facts. Ask whether to create one when the task is standard or critical and continuity matters. If the user asks to proceed without records, include a concise handoff block in the final response.
 
-## Dispatch Patterns
+## Completion Gates
 
-三档任务的派发模式见 `references/dispatch-patterns.md`。原则：先最小化上下文，再派发；先审查物理转译，再执行关键实现；执行与审核尽量分离。
+Before final response:
 
-## Completion Rules
+- `quick`: report action, result, and any uncertainty or risk.
+- `standard`: verify feasible outputs, perform basic objective review, update records if available, and list residual risks.
+- `critical`: pass or explicitly fail the relevant gates in `references/review-gates.md`; record decisions, evidence, unresolved risks, next actions, and must-read files.
 
-结束一轮工作前检查：
+Do not claim a scientific conclusion is established unless the evidence gate and physics-consistency gate both pass.
 
-- `quick`: 已说明做了什么、结果是什么、是否有风险。
-- `standard`: 已更新 `worklog.md` 和 `handoff.md`，或说明为什么当前没有项目记录目录。
-- `critical`: 已完成物理一致性审核，记录风险、决策、下一步和必读文件。
+## Coordination With Other Skills
 
-最终汇报必须包含：当前结论、已完成事项、主要风险、下一步建议。
+This skill is the orchestration layer, not an exclusive toolset. The main thread and delegated sub-agents may use relevant tools, MCPs, scripts, and specialized skills inside this governance structure:
+
+| Situation | Preferred Companion |
+|---|---|
+| Feature, bugfix, refactor | TDD, systematic debugging, requesting code review |
+| PR or GitHub workflow | GitHub skills or work-with-pr |
+| Documents, slides, spreadsheets | documents, presentations, spreadsheets |
+| New or revised skill | skill-creator, writing-skills |
+| Large research project | research-orchestrator remains the top-level coordinator |
+
+If another skill's workflow conflicts with scientific governance, state the conflict and choose the path that best protects the research objective.

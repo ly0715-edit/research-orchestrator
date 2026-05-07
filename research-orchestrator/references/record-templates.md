@@ -1,19 +1,20 @@
 # Record Templates
 
-长期记录用于项目记忆；`handoff.md` 用于线程切换。记录要短、准、可追溯，不写未经证据支持的结论。
+Records preserve continuity. Keep them concise, evidence-based, and usable by a future thread.
 
 ## Directory
 
 ```text
-research/
-  <project-name>/
-    project-brief.md
-    physics-core.md
-    decisions.md
-    worklog.md
-    reviews.md
-    handoff.md
+research/<project-name>/
+  project-brief.md
+  physics-core.md
+  decisions.md
+  worklog.md
+  reviews.md
+  handoff.md
 ```
+
+Create records only when the user approves or the project already has a record directory. Do not invent project facts to fill templates.
 
 ## project-brief.md
 
@@ -24,7 +25,7 @@ research/
 
 ## research_goal
 
-## physics_core
+## scientific_claims_or_outputs
 
 ## scope
 
@@ -41,12 +42,13 @@ research/
 # Physics Core
 
 ## physical_problem
-
 ## core_assumptions
+
+## observables_and_variables
 
 ## physical_constraints
 
-## observables_and_variables
+## valid_algorithmic_mappings
 
 ## invalid_shortcuts
 
@@ -61,10 +63,12 @@ research/
 ## YYYY-MM-DD - <decision title>
 
 - decision:
+- level:
 - reason:
 - evidence:
 - alternatives_rejected:
-- impact:
+- physical_impact:
+- reproducibility_impact:
 - revisit_condition:
 ```
 
@@ -77,14 +81,15 @@ research/
 
 - level:
 - goal:
-- context:
+- scientific_framing:
 - actions:
+- files_or_data_touched:
+- commands_or_experiments:
 - results:
+- verification:
 - risks:
 - next_actions:
-- files_touched:
 ```
-
 ## reviews.md
 
 ```markdown
@@ -94,9 +99,11 @@ research/
 
 - reviewed_artifact:
 - review_type:
+- gates_checked:
 - alignment_check:
 - confirmed_consistencies:
 - risks:
+- evidence_gaps:
 - required_corrections:
 - verdict:
 ```
@@ -108,18 +115,21 @@ research/
 
 - last_updated:
 - current_goal:
-- physics_core:
+- physics_core_summary:
+- current_hypothesis_or_design:
 - completed_work:
 - open_tasks:
 - known_risks:
+- current_blockers:
 - next_actions:
 - must_read_files:
-- current_blockers:
+- record_files:
 ```
 
 ## Handoff Rules
 
-- 控制在下一线程可快速读取的长度。
-- 只写当前推进所必需的信息。
-- 必须列出 `must_read_files`，避免新线程盲读全部历史。
-- 对不确定内容标注为风险或待验证，不写成结论。
+- Keep handoff short enough to read at the start of a new thread.
+- Include only information needed to continue work safely.
+- List `must_read_files`; do not force the next thread to scan everything.
+- Mark uncertain content as risk or pending verification.
+- For critical work, include review verdict and missing evidence if any.
