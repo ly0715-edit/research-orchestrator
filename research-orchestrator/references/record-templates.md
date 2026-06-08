@@ -7,7 +7,7 @@ Records preserve continuity. Keep them concise, evidence-based, and usable by a 
 ```text
 research/<project-name>/
   project-brief.md
-  physics-core.md
+  domain-core.md
   decisions.md
   worklog.md
   reviews.md
@@ -36,23 +36,23 @@ Create records only when the user approves or the project already has a record d
 ## current_status
 ```
 
-## physics-core.md
+## domain-core.md
 
 ```markdown
-# Physics Core
+# Domain Core
 
-## physical_problem
+## scientific_problem
 ## core_assumptions
 
 ## observables_and_variables
 
-## physical_constraints
+## domain_constraints
 
 ## valid_algorithmic_mappings
 
 ## invalid_shortcuts
 
-## open_physics_questions
+## open_domain_questions
 ```
 
 ## decisions.md
@@ -67,7 +67,7 @@ Create records only when the user approves or the project already has a record d
 - reason:
 - evidence:
 - alternatives_rejected:
-- physical_impact:
+- scientific_impact:
 - reproducibility_impact:
 - revisit_condition:
 ```
@@ -115,7 +115,7 @@ Create records only when the user approves or the project already has a record d
 
 - last_updated:
 - current_goal:
-- physics_core_summary:
+- domain_core_summary:
 - current_hypothesis_or_design:
 - completed_work:
 - open_tasks:

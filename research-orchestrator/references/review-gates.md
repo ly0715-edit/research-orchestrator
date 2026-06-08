@@ -2,18 +2,18 @@
 
 Use these gates before accepting critical scientific work, and selectively for standard work when risk rises.
 
-## Gate 1: Physics Consistency
+## Gate 1: Domain Consistency
 
 Pass only when:
 
-- The physical objective is explicit.
+- The scientific objective is explicit.
 - Variables, observables, thresholds, and diagnostics preserve their stated meaning.
-- Algorithmic steps do not silently change the physical assumption.
+- Algorithmic steps do not silently change the scientific assumption.
 - Known limitations are stated as limitations, not conclusions.
 
 Fail or pause when:
 
-- A physical concept is used without definition.
+- A scientific concept is used without definition.
 - A code shortcut, metric, or threshold changes the scientific interpretation.
 - The result depends on an assumption the user has not accepted.
 

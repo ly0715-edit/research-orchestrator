@@ -1,8 +1,8 @@
 interface:
   display_name: "Research Orchestrator"
-  short_description: "科研项目物理治理、证据审核与长期交接"
+  short_description: "Evidence-first governance for scientific AI workflows"
   brand_color: "#2563EB"
-  default_prompt: "Use $research-orchestrator to coordinate this scientific task with level selection, physics framing, bounded delegation, review gates, and handoff records."
+  default_prompt: "Use $research-orchestrator to coordinate this scientific task with level selection, domain framing, bounded delegation, review gates, and handoff records."
 
 policy:
   allow_implicit_invocation: true

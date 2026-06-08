@@ -1,6 +1,6 @@
 # Dispatch Patterns
 
-The main thread chooses the lightest workflow that protects the research objective. Escalate when evidence, physics, or reproducibility risk increases.
+The main thread chooses the lightest workflow that protects the research objective. Escalate when domain, evidence, or reproducibility risk increases.
 
 ## Level: quick
 
@@ -17,7 +17,7 @@ Records: none unless the result changes project memory.
 
 Stop or upgrade when:
 
-- The task reveals a physical assumption, experiment design issue, or result interpretation problem.
+- The task reveals a scientific assumption, experiment design issue, or result interpretation problem.
 - The user asks for continuity, strict review, or project handoff.
 
 ## Level: standard
@@ -53,24 +53,24 @@ Relevant companion tools/skills:
 
 Upgrade to critical when:
 
-- A physical definition, threshold, label, metric, or assumption changes.
+- A scientific definition, threshold, label, metric, or assumption changes.
 - Verification results affect a thesis/paper/report conclusion.
 - The work determines whether an experiment is scientifically valid.
 - The user asks for independent review.
 
 ## Level: critical
 
-Use for physics assumptions, core algorithms, final or near-final conclusions, direction changes, high-impact experiments, reproducibility-critical workflows, or domain logic where mistakes are scientifically costly.
+Use for scientific assumptions, core algorithms, final or near-final conclusions, direction changes, high-impact experiments, reproducibility-critical workflows, or domain logic where mistakes are scientifically costly.
 
 Main thread flow:
 
 1. Define research objective, scientific claim at risk, success criteria, and stop conditions.
-2. Read current `handoff.md`, `physics-core.md`, `decisions.md`, and recent `reviews.md` if they exist.
-3. Dispatch `Physics Translator` unless the required framing is already current and explicit.
+2. Read current `handoff.md`, `domain-core.md`, `decisions.md`, and recent `reviews.md` if they exist.
+3. Dispatch `Domain Translator` unless the required framing is already current and explicit.
 4. Convert approved framing into a plan via `Execution Planner` or main-thread planning.
 5. Execute through bounded tasks; keep write scopes disjoint when using multiple agents.
 6. Verify outputs with commands, data checks, figures, metrics, or artifact inspection as appropriate.
-7. Dispatch `Physics Reviewer` independently with objective, physics core, plan/result, and evidence.
+7. Dispatch `Scientific Reviewer` independently with objective, domain core, plan/result, and evidence.
 8. Use `Evidence Auditor` when claims depend on metrics, plots, logs, datasets, citations, or reproducibility details.
 9. Resolve conflicts explicitly; decide corrections in the main thread.
 10. Update records: `worklog.md`, `reviews.md`, `decisions.md` when applicable, and `handoff.md`.
@@ -82,7 +82,7 @@ Critical context packet:
 Task level: critical
 Research objective:
 Scientific claim at risk:
-Physics core:
+Domain core:
 Current hypothesis:
 Relevant evidence/files:
 Allowed scope:
@@ -96,7 +96,7 @@ Decision owner: main thread
 
 - Do not dump full history into a sub-agent. Send objective, boundary, evidence, and schema.
 - Prefer records and must-read files over long chat summaries.
-- Implementation agents do not make physical validity decisions.
+- Implementation agents do not make scientific validity decisions.
 - Review agents do not implement fixes unless separately assigned.
 - If sub-agent outputs conflict, list the conflict, evidence on each side, and main-thread decision.
 - If evidence is insufficient, stop at a provisional conclusion and record what is missing.

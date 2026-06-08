@@ -1,150 +1,89 @@
-﻿# Research Orchestrator
+# Research Orchestrator
 
-Research Orchestrator is a Codex skill for managing complex scientific work with stronger discipline around scope, evidence, review, and handoff. It is designed for research tasks where a small undocumented change can alter a result, weaken a claim, or make later work difficult to reproduce.
+**Research Orchestrator** is a Codex skill for evidence-first scientific workflows. It helps AI agents coordinate complex research tasks with explicit scientific framing, bounded execution, independent review, and reproducible handoff records.
 
-This skill is not a domain-specific answer generator. It is a workflow and governance layer that helps an AI agent coordinate scientific reasoning, implementation, verification, review, and project memory.
+It is designed for work where a casual answer is not enough: experiments, data pipelines, model evaluation, scientific code changes, result interpretation, and long-running projects where assumptions and evidence must remain traceable.
 
-## Why This Skill Exists
+## Why It Matters
 
-Scientific work often fails in ways that ordinary coding workflows do not fully catch:
+AI agents are useful in research, but scientific work has failure modes that ordinary coding workflows do not fully protect against:
 
-- A result is reported before the supporting evidence is clear.
-- A script is changed without recording which assumption changed.
-- An experiment is repeated, but the exact decision path is lost.
-- A figure, metric, or conclusion becomes disconnected from the method that produced it.
-- A long-running project spans multiple conversations, and important context disappears.
-- Multiple agents or tools contribute useful work, but no one owns the final scientific judgment.
+- results are summarized before the supporting evidence is checked;
+- code changes alter a scientific definition without anyone noticing;
+- experiments are repeated without a record of assumptions, filters, or acceptance criteria;
+- figures, metrics, logs, and written claims drift apart;
+- long-running projects lose context across sessions;
+- multiple agents contribute analysis, but no one owns the final scientific judgment.
 
-Research Orchestrator addresses these problems by making the agent slow down at the right moments: define the research objective, separate evidence from inference, choose an appropriate risk level, delegate bounded work when useful, require review before conclusions change, and record decisions for future continuation.
+Research Orchestrator provides a lightweight governance layer for these situations. It does not replace domain expertise; it makes the agent more disciplined about scope, evidence, review, and continuity.
 
-## Who It Is For
+## What The Skill Does
 
-This skill is useful for researchers, engineers, analysts, and students who use AI agents in scientific or evidence-heavy work, especially when tasks involve:
+Research Orchestrator guides an AI agent through six core behaviors:
+
+1. **Select the right governance level**
+   - `quick`: low-risk checks and small local tasks.
+   - `standard`: ordinary experiments, data processing, summaries, or module edits.
+   - `critical`: assumptions, core algorithms, validation logic, paper-level conclusions, or reproducibility-critical changes.
+
+2. **Frame the scientific objective**
+   - Define the research question, claim at risk, observables, assumptions, available evidence, and acceptance criteria before execution.
+
+3. **Separate evidence from inference**
+   - Keep observations, assumptions, inferences, decisions, and unresolved risks distinct.
+
+4. **Coordinate bounded sub-agent work**
+   - Delegate planning, implementation, review, evidence auditing, or record synthesis without giving away final judgment.
+
+5. **Apply review gates before conclusions change**
+   - Check domain consistency, evidence sufficiency, reproducibility, implementation integrity, and handoff completeness.
+
+6. **Preserve project memory**
+   - Encourage concise records for decisions, worklogs, reviews, and future handoff.
+
+## Who Should Use It
+
+Use this skill if you use AI agents for scientific or evidence-heavy work, including:
 
 - computational experiments;
-- data processing pipelines;
+- data analysis pipelines;
 - model evaluation and comparison;
-- scientific code maintenance;
-- paper, report, or thesis result interpretation;
-- reproducibility-sensitive analysis;
-- multi-session project continuation;
-- review of claims supported by logs, figures, metrics, or datasets.
+- scientific or analytical code maintenance;
+- reproducibility-sensitive result interpretation;
+- paper, report, thesis, or technical decision support;
+- multi-session projects where context loss is costly;
+- workflows where logs, figures, metrics, datasets, and written claims must agree.
 
-It can be adapted to many fields, including physical sciences, environmental science, remote sensing, engineering, biomedical analysis, geoscience, climate research, social science computation, and other data-intensive research workflows.
+It is intentionally domain-general. It can support physical science, life science, environmental analysis, engineering, social science computation, machine learning research, and other research workflows that depend on evidence discipline.
 
-## What It Does
+## Installation
 
-Research Orchestrator provides a structured operating mode for AI-assisted research work.
-
-### 1. Level Selection
-
-The skill classifies tasks into three levels:
-
-| Level | Typical Use | Governance |
-|---|---|---|
-| `quick` | Local inspection, simple explanation, low-risk edits | Direct work with a concise risk note |
-| `standard` | Ordinary experiment scripts, data processing, summaries, module edits | Scope, plan, execute, verify, basic review, record update when applicable |
-| `critical` | Changes to assumptions, core algorithms, experiment validity, or paper-level conclusions | Scientific framing, bounded execution, independent review, evidence gates, decision record, handoff |
-
-This prevents lightweight tasks from becoming overmanaged while still protecting high-risk scientific work.
-
-### 2. Scientific Framing
-
-For non-trivial tasks, the skill asks the agent to clarify:
-
-- What is the scientific objective?
-- What claim or output is at risk?
-- What observations, variables, metrics, or artifacts matter?
-- What assumptions are known, uncertain, or unverified?
-- What evidence is available?
-- What would count as a successful result?
-
-The goal is to keep implementation choices aligned with the scientific meaning of the work.
-
-### 3. Evidence Discipline
-
-The skill separates:
-
-- observations;
-- assumptions;
-- inferences;
-- decisions;
-- unresolved risks.
-
-This is especially important when a result is based on code output, logs, generated figures, model scores, data filters, thresholds, or manual interpretation.
-
-### 4. Bounded Delegation
-
-When a task is large enough, Research Orchestrator can coordinate specialized sub-agent roles, such as:
-
-- Physics or domain translator;
-- Execution planner;
-- Implementation agent;
-- Scientific reviewer;
-- Evidence auditor;
-- Research scribe.
-
-The main thread remains responsible for judgment. Sub-agents provide bounded analysis, implementation, or review, but they do not silently change conclusions or project direction.
-
-### 5. Review Gates
-
-For critical work, the skill uses explicit acceptance gates:
-
-- physical or domain consistency;
-- evidence sufficiency;
-- reproducibility;
-- implementation integrity;
-- handoff completeness.
-
-A conclusion should not be treated as established unless the relevant evidence and consistency checks pass.
-
-### 6. Research Records and Handoff
-
-The skill encourages lightweight project records for long-running work, such as:
+Copy the skill directory into your Codex skills directory:
 
 ```text
-research/<project-name>/
-  project-brief.md
-  physics-core.md
-  decisions.md
-  worklog.md
-  reviews.md
-  handoff.md
+research-orchestrator/
+  SKILL.md
+  agents/
+  references/
 ```
 
-These records help future sessions understand what was done, why it was done, what evidence supports it, and what remains uncertain.
+Typical destinations include:
 
-## What Problems It Helps Solve
+```text
+~/.codex/skills/research-orchestrator
+```
 
-Research Orchestrator is intended to reduce common failure modes in AI-assisted research:
+or another skills directory supported by your Codex environment.
 
-- losing the reasoning behind an experimental choice;
-- mixing speculation with verified evidence;
-- changing code without preserving scientific meaning;
-- accepting results without checking the data path;
-- treating generated text as a conclusion rather than a draft claim;
-- forgetting previous decisions across sessions;
-- allowing implementation convenience to override research validity;
-- relying on one agent's output without independent review.
+If you use a skill installer that accepts GitHub paths, install from:
 
-## What It Does Not Do
+```text
+https://github.com/ly0715-edit/research-orchestrator/tree/main/research-orchestrator
+```
 
-This skill does not:
+## Quick Start
 
-- replace domain expertise;
-- guarantee that a scientific conclusion is correct;
-- automatically run experiments or validate data quality;
-- remove the need for human review;
-- impose heavy process on every small task;
-- provide private project knowledge by default.
-
-It provides structure. The user and the main agent still own the scientific judgment.
-
-## How To Use
-
-Install or place the skill folder in the appropriate Codex skills directory, then invoke it when a research task needs stronger governance.
-
-Example prompts:
+Invoke the skill when a research task needs stronger governance:
 
 ```text
 Use research-orchestrator to plan this experiment and define what evidence is needed before changing the conclusion.
@@ -162,6 +101,16 @@ Use research-orchestrator to coordinate a multi-step analysis and produce a hand
 Use research-orchestrator before modifying this scientific code, because the change may affect reproducibility.
 ```
 
+## Workflow Levels
+
+| Level | Use When | Expected Discipline |
+|---|---|---|
+| `quick` | Local inspection, simple explanation, low-risk command, small non-scientific edit | Direct work, concise result, uncertainty or risk note |
+| `standard` | Ordinary experiment scripts, data processing, module edits, stage summaries, non-final analysis | Scope, plan, execute, verify, basic review, record update when records exist |
+| `critical` | Scientific assumptions, core algorithms, validation logic, paper conclusions, direction changes, reproducibility-critical experiments | Domain translation, bounded execution, independent review, decision record, handoff |
+
+The skill intentionally chooses the smallest level that protects research quality. It can escalate when new evidence shows higher risk.
+
 ## Repository Structure
 
 ```text
@@ -176,45 +125,49 @@ research-orchestrator/
     review-gates.md
 ```
 
-- `SKILL.md` defines when the skill is triggered and the core operating principles.
-- `agents/openai.yaml` provides interface metadata for Codex.
+- `SKILL.md` defines the trigger logic and core workflow.
+- `agents/openai.yaml` provides Codex interface metadata.
 - `references/agent-cards.md` describes optional sub-agent roles.
-- `references/dispatch-patterns.md` defines workflows for quick, standard, and critical tasks.
-- `references/record-templates.md` provides reusable project memory templates.
-- `references/review-gates.md` defines scientific acceptance checks.
+- `references/dispatch-patterns.md` defines level-specific workflows.
+- `references/record-templates.md` provides lightweight research memory templates.
+- `references/review-gates.md` defines acceptance gates for scientific claims.
 
-## Recommended Use Cases
+## Research Records
 
-Use this skill when the task involves one or more of the following:
+For long-running projects, the skill recommends a concise record directory such as:
 
-- a result that may later appear in a paper, report, thesis, or technical decision;
-- a code change that affects scientific meaning or reproducibility;
-- an experiment that needs clear assumptions and acceptance criteria;
-- a multi-session project where context loss is costly;
-- a need to compare evidence from code, data, figures, metrics, and written claims;
-- a need for independent review before changing a conclusion.
+```text
+research/<project-name>/
+  project-brief.md
+  domain-core.md
+  decisions.md
+  worklog.md
+  reviews.md
+  handoff.md
+```
 
-For simple factual questions, one-off command checks, or low-risk formatting edits, a normal agent workflow is usually enough.
+These records help future sessions recover what was done, why it was done, what evidence supports it, and what remains uncertain.
 
-## Design Principles
+## What It Is Not
 
-Research Orchestrator follows a few simple principles:
+Research Orchestrator does not:
 
-- Scientific meaning comes before implementation convenience.
-- Evidence should be visible before claims are accepted.
-- Assumptions and unknowns should be named explicitly.
-- Execution and review should be separated when conclusions may change.
-- Long-running work needs records, not just chat history.
-- The main thread owns final judgment.
+- replace domain expertise;
+- guarantee that a scientific conclusion is correct;
+- automatically validate data quality;
+- run experiments by itself;
+- remove the need for human review;
+- impose heavy process on every small task;
+- require users to disclose private project information.
 
-## Privacy and Project Safety
+It provides structure so that AI-assisted research work is easier to inspect, reproduce, and continue.
 
-The skill is intentionally generic. It does not require users to disclose private project names, datasets, unpublished results, institutional details, or personal research directions. Records should only include information the user chooses to preserve.
+## Privacy And Safety
 
-When used in sensitive projects, keep examples, prompts, and handoff notes abstract unless the project context is already intended to be shared.
+The skill is intentionally generic. It is not tied to any private project, institution, dataset, unpublished result, or specific research direction.
 
-## Summary
+When using it in sensitive work, keep records as abstract as possible and include only the information needed for reproducibility and handoff.
 
-Research Orchestrator helps AI agents behave more like disciplined research collaborators: careful about assumptions, explicit about evidence, cautious with conclusions, and reliable across long-running scientific work.
+## License
 
-It is most valuable when the cost of being casually wrong is high.
+MIT License. See [LICENSE](LICENSE).
